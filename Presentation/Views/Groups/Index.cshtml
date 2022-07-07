@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@String.Concat("Group list", (ViewBag.Parrent == null? "": ": " + ViewBag.Parrent.Name))</h1>
+
+<!DOCTYPE html>
+
+<p>
+    <a asp-action="Create" asp-route-parrentId="@(ViewBag.Parrent == null? 0: ViewBag.Parrent.Id)">Add</a>
+</p>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>University</title>
+</head>
+<body>
+    <div>
+
+        <p class=MsoNormal>&nbsp;</p>
+
+        <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+               style='border-collapse:collapse;border:none'>
+            <tr>
+                <td width=217 valign=top style='width:162.8pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+                    <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'><b>NAME</b></p>
+                </td>
+                @if (ViewBag.Parrent == null)
+                {
+                    <td width=406 valign=top style='width:162.8pt;border:solid windowtext 1.0pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'><b>COURSE</b></p>
+                    </td>
+                }
+            </tr>
+            @foreach (var group in ViewBag.ModelList)
+            {
+                <tr>
+                    <td width=217 valign=top style='width:162.8pt;border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                        <a asp-action="Edit" asp-route-id="@group.Id" asp-route-parrentId="@(ViewBag.Parrent==null? 0 : ViewBag.Parrent.Id)">@group.Name</a>
+                    </td>
+                    @if (ViewBag.Parrent == null)
+                    {
+                        <td width=406 valign=top style='width:162.8pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+                            <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal'>@group.Course.Name</p>
+                        </td>
+                    }
+                    <td>
+                        <a asp-action="ViewListByParrent" asp-route-id="@group.Id" >Students...</a>
+                        <a asp-action="Delete" asp-route-id="@group.Id" asp-route-parrentId="@(ViewBag.Parrent==null? 0 : ViewBag.Parrent.Id)">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <p class=MsoNormal>&nbsp;</p>
+
+</div>
+</body>
+</html>

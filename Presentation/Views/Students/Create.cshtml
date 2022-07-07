@@ -1,0 +1,53 @@
+﻿@model Models.Student
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<div>
+    <a asp-action="Index" asp-route-id="@(ViewBag.Parrent == null? null: ViewBag.Parrent.Id)">Back to list</a>
+</div>
+
+<h4>New student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-route-parrentId="@(ViewBag.Parrent == null? 0: ViewBag.Parrent.Id)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" placeholder="Fill in the last name"/>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" placeholder="Fill in the first name"/>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupId" class="control-label">Group</label>
+                @if (ViewBag.Parrent == null)
+                {
+                    <select asp-for="GroupId" class ="form-control" asp-items="ViewBag.ParrentId" >
+                        <option selected="selected" disabled="disabled">Choose a group</option>
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="GroupId" class ="form-control" asp-items="ViewBag.ParrentId" >
+                        <option selected="selected" value=@ViewBag.Parrent.Id> @ViewBag.Parrent.Name </option>
+                    </select>
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
