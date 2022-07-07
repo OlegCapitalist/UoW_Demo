@@ -1,0 +1,39 @@
+﻿@model Models.Group
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Item card</h1>
+
+<div>
+    <a asp-action="Index" asp-route-id="@(ViewBag.Parrent == null? null: ViewBag.Parrent.Id)">Back to list</a>
+</div>
+ 
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-parrentId="@(ViewBag.Parrent == null? 0: ViewBag.Parrent.Id)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="Fill in the name"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourseId" class="control-label">Course</label>
+                <select asp-for="CourseId" class ="form-control" asp-items="ViewBag.ParrentId" >
+                    <option selected="selected" disabled="disabled">Choose a course</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
